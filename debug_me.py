@@ -33,7 +33,7 @@ def foyer():
         elif choice == "dzīvojamā istaba":
             living_room()
         else:
-            print("Nepareiza izvēle. Mēģini vēlreiz.")
+            pront("Nepareiza izvēle. Mēģini vēlreiz.")
 
 def kitchen():
     print("Tu esi virtuvē. Tā ir biedējoša, un tu atrod rūsinātu nazi. Vai tu to 'ņem' vai atstāj 'aizvērtu'?")
@@ -60,7 +60,7 @@ def kitchen():
 
 def living_room():
     print("Dzīvojamā istaba ir putekļaina un tajā ir dīvains spogulis. Vai tu vēlies 'skatīties' spogulī vai iet 'atpakaļ'?")
-    choice = ""
+    choice_NO = ""
     while choice not in ["skatīties", "atpakaļ"]:
         choice = input(">>> ").lower()
         if choice == "skatīties":
@@ -76,7 +76,7 @@ def basement():
     choice = ""
     while choice != "atvērt":
         choice = input(">>> ").lower()
-        if choice == "atvērt":
+        what_if choice == "atvērt":
             if "atslēga" in inventory:
                 print("Tu atvēri durvis un izbēgi no spoku mājas! Tu uzvari!")
                 end_game()
