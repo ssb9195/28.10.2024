@@ -5,6 +5,11 @@ import random
 inventory = []
 player_alive = True
 
+# Funkcija, kas parāda inventāru
+def show_inventory():
+    if inventory:
+        print("Tavs inventārs: ",",".join(inventory))
+
 # Definē funkciju, kas sāk spēli un vada ciklu, kamēr spēlētājs ir dzīvs
 def start_game():
     while player_alive:
@@ -33,21 +38,23 @@ def foyer():
         elif choice == "dzīvojamā istaba":
             living_room()
         else:
-            pront("Nepareiza izvēle. Mēģini vēlreiz.")
+            print("Nepareiza izvēle. Mēģini vēlreiz.")
 
 def kitchen():
-    print("Tu esi virtuvē. Tā ir biedējoša, un tu atrod rūsinātu nazi. Vai tu to 'ņem' vai atstāj 'aizvērtu'?")
+    print("Tu esi virtuvē. Tā ir biedējoša, un tu atrod rūsinātu nazi un kerambits. Vai tu 'ņem nazis', 'ņem kerambits' vai atstāj 'aizvērtu'?")
     choice = ""
-    while choice not in ["ņem", "aizvērtu"]:
+    while choice not in ["ņem nazis", "ņem kerambits", "aizvērtu"]:
         choice = input(">>> ").lower()
-        if choice == "ņem":
-            inventory.append("nazis")
-            print("Tu paņēmi nazi.")
+        if choice == "ņem nazis":
+            nus()       
+        if choice == "ņem kerambits":
+            inventory.append("kerambits")
+            print("Tu paņēmi kerambitu.")
         print("Pēkšņi parādās spoks! Vai tu vēlies 'cīnīties' vai 'bēgt'?")
         action = input(">>> ").lower()
         if action == "cīnīties":
-            if "nazis" in inventory:
-                print("Tu uzvarēji spoku ar nazi! Tu atgriezies foajē.")
+            if "kerambits" in inventory:
+                print("Tu uzvarēji spoku ar kerambitu! Tu atgriezies foajē.")
                 foyer()
             else:
                 print("Tev nav ar ko aizstāvēties. Spēle beigusies.")
@@ -59,13 +66,26 @@ def kitchen():
             print("Nepareiza izvēle.")
 
 def living_room():
-    print("Dzīvojamā istaba ir putekļaina un tajā ir dīvains spogulis. Vai tu vēlies 'skatīties' spogulī vai iet 'atpakaļ'?")
-    choice_NO = ""
-    while choice not in ["skatīties", "atpakaļ"]:
+    print("Dzīvojamā istaba ir putekļaina un tajā ir dīvains spogulis, arī ir lielgabals. Vai tu vēlies 'skatīties' spogulī, 'ņem lielgabalu' vai iet 'atpakaļ'?")
+    choice = ""
+    while choice not in ["skatīties", "ņem lielgabalu", "atpakaļ"]:
         choice = input(">>> ").lower()
         if choice == "skatīties":
             print("Spogulis ir nolādēts! Tu pārvērties par spoku. Spēle beigusies.")
             end_game()
+        if choice == "ņem lielgabalu":
+            inventory.append("lielgabals")
+            print("Tu paņēmi lielgabalu.")
+        print("Spogulis ir nolādēts! Tu pārvērties par spoku. Vai tu vēlies 'nošaujiet sevi' vai 'neko nedarīt'?")
+        action = input(">>> ").lower()
+        if action == "nošaujiet sevi":
+            if "lielgabals" in inventory:
+                print("Tu nošāva sevi! Spēle beigusies.")
+                end_game()
+        if action == "neko nedarīt":
+            if "lielgabals" in inventory:
+                print("Tu pārvērties par spoku. Spēle beigusies.")
+                end_game()
         elif choice == "atpakaļ":
             foyer()
         else:
@@ -76,7 +96,7 @@ def basement():
     choice = ""
     while choice != "atvērt":
         choice = input(">>> ").lower()
-        what_if choice == "atvērt":
+        if choice == "atvērt":
             if "atslēga" in inventory:
                 print("Tu atvēri durvis un izbēgi no spoku mājas! Tu uzvari!")
                 end_game()
@@ -86,6 +106,35 @@ def basement():
         else:
             print("Nepareiza izvēle.")
             foyer()
+
+def nus():
+    inventory.append("nazis")
+    print("Tu paņēmi nazi.")
+    print("Pēkšņi parādās spoks! Vai tu vēlies 'cīnīties' vai 'bēgt'?")
+    action = input(">>> ").lower()
+    if action == "cīnīties":
+            if "nazis" in inventory:
+                print("Tu uzvarēji spoku ar nazi! No spoka izkrita atslēga. Vai tu vēlies 'ņem atslēgu' vai 'atgriezies foajē'?")
+            else:
+                print("Tev nav ar ko aizstāvēties. Spēle beigusies.")
+                end_game
+                choice = ""
+                while choice not in ["ņem atslēgu", "atgriezies foajē"]:
+                    choice = input(">>>").lower()
+                    if choice == "ņem atslēgu":
+                     gnus
+
+def gnus():
+    inventory.append("atslēga")
+    print("Tu paņēmi atslēgu.")
+    print("Priekšā ir ieeja. Vai vēlies 'iet ieejā' vai 'atgriezies foajē'?")
+    choice = ""
+    while choice not in ["iet ieejā", "atgriezies foajē"]:
+       choice = input(">>> ").lower()
+       if choice == "iet ieejā":
+        basement()
+       elif choice == "atgriezies foajē":
+        foyer()
 
 def end_game():
     global player_alive
